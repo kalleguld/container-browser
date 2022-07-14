@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { useFileList } from './queries/fileListQuery'
 import { asFileSize } from './util/asFileSize';
@@ -7,13 +6,13 @@ function App() {
 
   const files = useFileList();
 
-  const items = (files.data?.files) && Object.entries(files.data.files)
-    .map(([name, file]) => (
+  const items = (files.data?.nodes) && Object.entries(files.data.nodes)
+    .map(([name, node]) => (node.type === 'file') && (
       <li key={name}>
-        <a href={file.url}>
+        <a href={node.url}>
           {name}
         </a>
-        ( {asFileSize(file.size).text} )
+        ( {asFileSize(node.size).text} )
       </li>
     ))
 

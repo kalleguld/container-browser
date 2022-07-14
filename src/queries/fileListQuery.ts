@@ -1,5 +1,5 @@
 import { QueryClient, useQuery, UseQueryResult } from "react-query";
-import { File, Folder } from "../folder";
+import { File, Folder, Node } from "../folder";
 
 const key = 'fileList';
 
@@ -85,27 +85,24 @@ https://kgnstorage.blob.core.windows.net/athco/archive/AthcoQualityControl_1.0.6
 
 export function useFileList(): UseQueryResult<Folder> {
     const q = useQuery<Folder>(key, async () => {
-        const response = await fetch('./?restype=container&comp=list');
-        if (!response.ok)
-            throw new Error("Could not get file list");
-        const responseText = await response.text();
-        //const responseText = mockResult;
+        // const response = await fetch('./?restype=container&comp=list');
+        // if (!response.ok)
+        //     throw new Error("Could not get file list");
+        // const responseText = await response.text();
+        const responseText = mockResult;
         const xml = new DOMParser().parseFromString(responseText, 'text/xml');
         const blobs = xml.getElementsByTagName('Blobs')[0]
             .getElementsByTagName('Blob');
         
-        const files: {[name: string]: File} = {};
+        const nodes: {[name: string]: Node} = {};
         for (let blob of blobs){
             const filename = blob.getElementsByTagName('Name')[0].innerHTML;
             const url= blob.getElementsByTagName("Url")[0].innerHTML;
             const size = parseInt(blob.getElementsByTagName('Content-Length')[0].innerHTML);
-            files[filename] = { size, url };
+            nodes[filename] = { type:'file', size, url };
         }
 
-        return {
-            files: files,
-            subFolders: {},
-        }
+        return {nodes, type:'folder', path: ''} as Folder;
     });
     return q;
 }

@@ -1,11 +1,16 @@
 export interface File {
+    type: "file";
+
     url:string;
 
     size: number;
 }
 
 export interface Folder {
+    type: "folder";
 
-    subFolders: {[name: string]: Folder};
-    files: {[name: string]: File};
+    path: string;
+    nodes: {[name: string]: Node};
 }
+
+export type Node = File | Folder;
