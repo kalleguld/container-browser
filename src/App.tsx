@@ -29,9 +29,11 @@ function App() {
       </ul>}
 
 
-      <div>
-        Last updated at: <span>{new Date(files.dataUpdatedAt).toLocaleString()}</span>
-      </div>
+      {files.dataUpdatedAt && 
+        <div>
+          Last updated at: <span>{new Date(files.dataUpdatedAt).toLocaleString()}</span>
+        </div> 
+      }
       <button onClick={() => invalidateFileList(queryClient)}>
         {files.isFetching ? "Refreshing" : "Refresh"}
       </button>
