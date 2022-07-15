@@ -2,14 +2,22 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import * as rq from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
-const queryClient = new rq.QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchInterval: false,
+      refetchOnMount: false,
+    }
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <rq.QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <App />
-    </rq.QueryClientProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 )
