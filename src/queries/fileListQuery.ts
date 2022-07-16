@@ -1,5 +1,5 @@
 import { QueryClient, useQuery, UseQueryResult } from "react-query";
-import { Folder, Node } from "../folder";
+import { Folder, Node, NodeMap } from "../folder";
 
 const key = 'fileList';
 
@@ -36,13 +36,41 @@ function parseXml(responseText:string){
     const nodes: {[name: string]: Node} = {};
     for (let blob of blobs){
         const filename = blob.getElementsByTagName('Name')[0].innerHTML;
-        const url= blob.getElementsByTagName("Url")[0].innerHTML;
+        const url = blob.getElementsByTagName("Url")[0].innerHTML;
         const size = parseInt(blob.getElementsByTagName('Content-Length')[0].innerHTML);
-        nodes[filename] = { type:'file', size, url };
+        const lastModified = new Date(blob.getElementsByTagName('Last-Modified')[0].innerHTML);
+        nodes[filename] = { 
+            type: 'file', 
+            size, 
+            url,
+            lastModified
+        };
     }
-
-    return {nodes, type:'folder', path: ''} as Folder;
+    const rootFolder: Folder = {
+        nodes, 
+        type:'folder', 
+        path: '',
+        size: totalSize(nodes),
+        lastModified: maxDate(nodes),
+    };
+    return rootFolder;
 }
+
+function maxDate(nodes: NodeMap){
+    let result = Number.MIN_VALUE;
+    for (let node of Object.values(nodes)){
+        result = Math.max(result, node.lastModified.valueOf())
+    }
+    return new Date(result);
+}
+function totalSize(nodes: NodeMap){
+    let result = 0;
+    for (let node of Object.values(nodes)){
+        result += node.size;
+    }
+    return result;
+}
+
 
 export function invalidateFileList(queryClient: QueryClient){
     queryClient.invalidateQueries(key);

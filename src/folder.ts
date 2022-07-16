@@ -4,13 +4,18 @@ export interface File {
     url:string;
 
     size: number;
+    lastModified: Date;
 }
 
 export interface Folder {
     type: "folder";
 
     path: string;
-    nodes: {[name: string]: Node};
+    size: number;
+    lastModified: Date;
+
+    nodes: NodeMap;
 }
 
+export type NodeMap = {[name: string]: Node};
 export type Node = File | Folder;
