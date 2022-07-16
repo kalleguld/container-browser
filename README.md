@@ -1,11 +1,13 @@
 # container-browser
 
-Displays the contents of an Azure storage container.
+Displays the contents of an Azure storage container in a user-friendly format.
 
-## Installation
+## Use
 
-* Download the source code.
-* build the project by running `npm install && npm run build`
-* upload the file `dist/browse.html` to the root of an Azure Storage Container.
-* set the public access level of the storage container to "Container".
-* open `https://{storageaccount}.blob.core.windows.net/{container}/browse.html` in your browser.
+* Upload the file `browse.html` to the root of an Azure Storage Container.
+* Set the Public Access Level of the storage container to "Container".
+* Open `https://{storageaccount}.blob.core.windows.net/{container}/browse.html` in your browser.
+
+## Example
+
+https://kalleguld.blob.core.windows.net/container-browser-test/browse.html
