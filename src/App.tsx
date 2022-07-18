@@ -21,33 +21,33 @@ function App() {
       {files.error && <div> Error: {files.error.text}</div>}
 
       { (!files.isLoading && selectedFolder) &&
-        <Table rows={Object.entries(selectedFolder.nodes)} 
+        <Table rows={selectedFolder.nodes} 
           cols={[
             {
               header: 'Type',
               key: 'type',
-              content: (e) => e[1].type === 'file' ? 'File' : 'Folder'
+              content: (e) => e.type === 'file' ? 'File' : 'Folder'
             },
             {
               header: 'Name', 
               key: 'Name',
-              content: (e) => ((e[1].type === 'file') 
-                ? <a href={e[1].url} target='_blank'>{e[0]}</a>
-                : <Link to={e[1].path}>{e[0]}</Link>
+              content: (e) => ((e.type === 'file') 
+                ? <a href={e.url} target='_blank'>{e.name}</a>
+                : <Link to={e.path}>{e.name}</Link>
                ) ,
-              sorter: (a, b) => a[0].localeCompare(b[0])
+              sorter: (a, b) => a.name.localeCompare(b.name)
             },
             {
               header: 'File size', 
               key: 'filesize', 
-              content: (e) => asFileSize(e[1].size).text,
-              sorter: (a, b) => a[1].size - b[1].size
+              content: (e) => asFileSize(e.size).text,
+              sorter: (a, b) => a.size - b.size
             },
             {
               header: "Last modified",
               key: 'lastModified',
-              content: (e => e[1].lastModified.toLocaleString()),
-              sorter: (a, b) => a[1].lastModified.valueOf() - b[1].lastModified.valueOf()
+              content: (e => e.lastModified.toLocaleString()),
+              sorter: (a, b) => a.lastModified.valueOf() - b.lastModified.valueOf()
             }
           ]}
         />
@@ -71,7 +71,7 @@ function App() {
 }
 
 function getSelectedFolder(root: Folder|undefined, pathString: string): Folder|undefined{
-  if (pathString === '/')
+  if (pathString === '/' || pathString === "")
     return root;
   const path = pathString.split("/").slice(1);
   let isRoot = true;
@@ -82,7 +82,7 @@ function getSelectedFolder(root: Folder|undefined, pathString: string): Folder|u
     if (!result){
       break;
     }
-    let folder = result.nodes[folderName];
+    let folder = result.nodes.find(n => n.type === "folder" && n.name === folderName)
     if (!folder || folder.type !== "folder"){
       console.error("Could not find folder", {folderName, path, location})
       result = undefined;
