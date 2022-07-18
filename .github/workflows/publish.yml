@@ -3,7 +3,8 @@ name: New Release
 on:
   push:
     tags:
-    - 'v*'
+    - 'v0.*'
+    - 'v1.*'
 
 jobs:
   build:
@@ -21,6 +22,20 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run build
-    - uses: ncipollo/release-action@v1
+    - name: Create release
+      uses: ncipollo/release-action@v1
       with:
         artifacts: "dist/browse.html"
+    - name: Upload example to containerbrowserexample
+      uses: azure/login@v1
+      with: 
+        creds: ${{ secrets.AZURE_EXAMPLE_CONTAINER_ACCOUNT }}
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: >-
+            az storage blob upload-batch 
+              --account-name containerbrowserexample 
+              --auth-mode login 
+              -d 'example-1' 
+              -s ./dist
