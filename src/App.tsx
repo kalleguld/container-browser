@@ -26,7 +26,9 @@ function App() {
             {
               header: 'Type',
               key: 'type',
-              content: (e) => e.type === 'file' ? 'File' : 'Folder'
+              content: (e) => e.type === 'file' 
+                ? <span title='File'>📇</span> 
+                : <span title='Folder'>📁</span>
             },
             {
               header: 'Name', 

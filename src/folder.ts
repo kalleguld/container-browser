@@ -1,20 +1,20 @@
-export interface INodeBase{
+export interface InodeBase{
     name: string;
     size: number;
     lastModified: Date;
+    path: string;
 }
 
-export interface File extends INodeBase {
+export interface File extends InodeBase {
     type: "file";
 
     url:string;
+    splitPath: string[];
 }
 
-export interface Folder extends INodeBase {
+export interface Folder extends InodeBase {
     type: "folder";
-
-    path: string;
-    nodes: INode[];
+    nodes: Inode[];
 }
 
-export type INode = File | Folder;
+export type Inode = File | Folder;
