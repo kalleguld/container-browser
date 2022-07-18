@@ -38,3 +38,4 @@ jobs:
             --auth-mode login 
             --source ./dist
             --destination 'example-1' 
+            --overwrite
