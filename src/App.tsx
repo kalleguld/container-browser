@@ -5,7 +5,7 @@ import { Folder } from './folder';
 import { useFileList, invalidateFileList } from './queries/fileListQuery';
 import { asFileSize } from './util/asFileSize';
 
-function App() {
+export function App() {
 
   const files = useFileList();
   const queryClient = useQueryClient();
@@ -94,5 +94,3 @@ function getSelectedFolder(root: Folder|undefined, pathString: string): Folder|u
   }
   return result;
 }
-
-export default App
