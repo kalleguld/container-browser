@@ -13,47 +13,96 @@ export function useFileList(): UseQueryResult<Folder, FileListError> {
             throw err;
         }
         const responseText = await response.text();
-        try{
-            const folder = parseXml(responseText);
-            return folder;
-        }
-        catch (ex){
-            const err: FileListError = {
-                text: `Could not parse file list.`,
-                error: (ex instanceof(Error)) ? ex : undefined
-            };
-            throw err;
-        }
+        const folder = parseXml(responseText);
+        //const folder = parseXml2(); //TODO
+        return folder;
     });
     return q;
 }
 
-function parseXml(responseText:string){
-    const xml = new DOMParser().parseFromString(responseText, 'text/xml');
-    const blobs = xml.getElementsByTagName('Blobs')[0]
-        .getElementsByTagName('Blob');
-    
-    const nodes: {[name: string]: Node} = {};
-    for (let blob of blobs){
-        const filename = blob.getElementsByTagName('Name')[0].innerHTML;
-        const url = blob.getElementsByTagName("Url")[0].innerHTML;
-        const size = parseInt(blob.getElementsByTagName('Content-Length')[0].innerHTML);
-        const lastModified = new Date(blob.getElementsByTagName('Last-Modified')[0].innerHTML);
-        nodes[filename] = { 
-            type: 'file', 
-            size, 
-            url,
-            lastModified
+function parseXml(responseText:string): Folder {
+
+    // using "!" to avoid undefined-checks is OK in this function,
+    // because any errors are caught in the try/catch.
+    try{
+        const xml = new DOMParser().parseFromString(responseText, 'text/xml');
+        const blobs = xml.getElementsByTagName('Blobs')[0]!
+            .getElementsByTagName('Blob');
+        
+        const nodes: {[name: string]: Node} = {};
+        for (let blob of blobs){
+            const filename = blob.getElementsByTagName('Name')[0]!.innerHTML;
+            const url = blob.getElementsByTagName("Url")[0]!.innerHTML;
+            const size = parseInt(blob.getElementsByTagName('Content-Length')[0]!.innerHTML);
+            const lastModified = new Date(blob.getElementsByTagName('Last-Modified')[0]!.innerHTML);
+            nodes[filename] = { 
+                type: 'file', 
+                size, 
+                url,
+                lastModified
+            };
+        }
+        const rootFolder: Folder = {
+            nodes, 
+            type:'folder', 
+            path: '',
+            size: totalSize(nodes),
+            lastModified: maxDate(nodes),
         };
+        return rootFolder;
     }
-    const rootFolder: Folder = {
-        nodes, 
-        type:'folder', 
-        path: '',
-        size: totalSize(nodes),
-        lastModified: maxDate(nodes),
-    };
-    return rootFolder;
+    catch (ex){
+        const err: FileListError = {
+            text: `Could not parse file list.`,
+            error: (ex instanceof(Error)) ? ex : undefined
+        };
+        throw err;
+    }
+}
+
+function parseXml2(): Folder{
+    return {
+        type: "folder",
+        lastModified: new Date(),
+        nodes: {
+            a:{
+                type: "file",
+                url: "http://localhost/a",
+                lastModified: new Date(),
+                size: 4
+            },
+            b:{
+                type: "folder",
+                lastModified: new Date(),
+                path: "b",
+                size: 8,
+                nodes:{
+                    c:{
+                        type: "folder",
+                        lastModified: new Date(),
+                        path: "b/c",
+                        size: 8, 
+                        nodes:{
+                            d:{
+                                type: "file",
+                                url: "http://localhost/b/c/d",
+                                lastModified: new Date(),
+                                size: 4
+                            },
+                            e: {
+                                type: "file",
+                                url: "http://localhost/b/c/e",
+                                lastModified: new Date(),
+                                size: 4
+                            },
+                        },
+                    }
+                },
+            }
+        },
+        path: "",
+        size: 4
+    }
 }
 
 function maxDate(nodes: NodeMap){
