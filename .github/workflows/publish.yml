@@ -5,17 +5,15 @@ on:
     tags:
     - 'v*'
 
-env:
-  VITE_APP_VERSION: $GITHUB_REF_NAME
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
+    - name: Set version
+      run: echo "VITE_APP_VERSION=$GITHUB_REF_NAME" >> $GITHUB_ENV
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
@@ -26,5 +24,3 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "dist/browse.html"
-
-
