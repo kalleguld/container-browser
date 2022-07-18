@@ -10,4 +10,4 @@ Displays the contents of an Azure storage container in a user-friendly format.
 
 ## Example
 
-https://kalleguld.blob.core.windows.net/container-browser-test/browse.html
+https://containerbrowserexample.blob.core.windows.net/example-1/browse.html
