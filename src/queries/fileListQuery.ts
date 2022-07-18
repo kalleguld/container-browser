@@ -5,8 +5,10 @@ const key = 'fileList';
 
 export function useFileList(): UseQueryResult<Folder, FileListError> {
     const q = useQuery<Folder, FileListError>(key, async () => {
-        const responseText = await getXml();
-        //const responseText = await getDummyXml();
+        
+        const responseText = (import.meta.env.DEV 
+         ? await getDummyXml()
+         : await getXml());
         const rawFiles = getRawFiles(responseText);
         const files = rawFiles.map(toFile);
         const folder = folderize(files, []);

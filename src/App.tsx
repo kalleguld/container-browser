@@ -10,6 +10,7 @@ export function App() {
   const files = useFileList();
   const queryClient = useQueryClient();
   const location = useLocation();
+  const version = import.meta.env.VITE_APP_VERSION ?? "0.0.0";
 
   let selectedFolder: Folder|undefined = getSelectedFolder(files.data, location.pathname)
 
@@ -26,9 +27,10 @@ export function App() {
             {
               header: 'Type',
               key: 'type',
-              content: (e) => e.type === 'file' 
+              content: ((e) => e.type === 'file' 
                 ? <span title='File'>📇</span> 
-                : <span title='Folder'>📁</span>
+                : <span title='Folder'>📁</span>),
+              sorter: (a,b)=> a.type.localeCompare(b.type)
             },
             {
               header: 'Name', 
@@ -66,7 +68,9 @@ export function App() {
       </button>
 
       <div>
-        <a href="https://github.com/kalleguld/container-browser" target="_blank">Source</a>
+        <a href="https://github.com/kalleguld/container-browser" target="_blank">
+          Container Browser {version}
+        </a>
       </div>
     </div>
   )
