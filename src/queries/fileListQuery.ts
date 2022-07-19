@@ -145,83 +145,75 @@ export interface FileListError {
 }
 
 const dummyXml = `
-<EnumerationResults ContainerName="https://kgnstorage.blob.core.windows.net/athco/">
+<EnumerationResults ContainerName="https://containerbrowserexample.blob.core.windows.net/example-1/">
 <Blobs>
 <Blob>
-<Name>AthcoQualityControl_Latest.zip</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/AthcoQualityControl_Latest.zip</Url>
+<Name>a/b/c/d/e/helloworld.png</Name>
+<Url>
+https://containerbrowserexample.blob.core.windows.net/example-1/a/b/c/d/e/helloworld.png
+</Url>
 <Properties>
-<Last-Modified>Fri, 15 Jul 2022 11:15:57 GMT</Last-Modified>
-<Etag>0x8DA66536463E351</Etag>
-<Content-Length>26703779</Content-Length>
-<Content-Type>application/x-zip-compressed</Content-Type>
+<Last-Modified>Tue, 19 Jul 2022 08:20:58 GMT</Last-Modified>
+<Etag>0x8DA695F9C0C582F</Etag>
+<Content-Length>23773</Content-Length>
+<Content-Type>image/png</Content-Type>
 <Content-Encoding/>
 <Content-Language/>
-<Content-MD5/>
+<Content-MD5>y9Gm7jVrBhlE/N3k2gENHw==</Content-MD5>
 <Cache-Control/>
 <BlobType>BlockBlob</BlobType>
 <LeaseStatus>unlocked</LeaseStatus>
 </Properties>
 </Blob>
 <Blob>
-<Name>archive/AthcoQualityControl_1.0.632.0.zip</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/archive/AthcoQualityControl_1.0.632.0.zip</Url>
+<Name>a/b/c/d/f/Techsoft bg darkened.jpg</Name>
+<Url>
+https://containerbrowserexample.blob.core.windows.net/example-1/a/b/c/d/f/Techsoft bg darkened.jpg
+</Url>
 <Properties>
-<Last-Modified>Thu, 14 Jul 2022 06:37:55 GMT</Last-Modified>
-<Etag>0x8DA656362514F5A</Etag>
-<Content-Length>26700548</Content-Length>
-<Content-Type>application/x-zip-compressed</Content-Type>
+<Last-Modified>Tue, 19 Jul 2022 08:21:48 GMT</Last-Modified>
+<Etag>0x8DA695FB99E670B</Etag>
+<Content-Length>820725</Content-Length>
+<Content-Type>image/jpeg</Content-Type>
 <Content-Encoding/>
 <Content-Language/>
-<Content-MD5/>
+<Content-MD5>2sXWnmftCIkCULZANR0hCg==</Content-MD5>
 <Cache-Control/>
 <BlobType>BlockBlob</BlobType>
 <LeaseStatus>unlocked</LeaseStatus>
 </Properties>
 </Blob>
 <Blob>
-<Name>archive/AthcoQualityControl_1.0.633.0.zip</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/archive/AthcoQualityControl_1.0.633.0.zip</Url>
+<Name>a/b/c/d/f/zvamp.jpg</Name>
+<Url>
+https://containerbrowserexample.blob.core.windows.net/example-1/a/b/c/d/f/zvamp.jpg
+</Url>
 <Properties>
-<Last-Modified>Thu, 14 Jul 2022 06:56:46 GMT</Last-Modified>
-<Etag>0x8DA656604C7C445</Etag>
-<Content-Length>26700557</Content-Length>
-<Content-Type>application/x-zip-compressed</Content-Type>
+<Last-Modified>Tue, 19 Jul 2022 08:21:15 GMT</Last-Modified>
+<Etag>0x8DA695FA6535013</Etag>
+<Content-Length>162883</Content-Length>
+<Content-Type>image/jpeg</Content-Type>
 <Content-Encoding/>
 <Content-Language/>
-<Content-MD5/>
+<Content-MD5>CNR5X+zRsXhYZQmFvEFgNA==</Content-MD5>
 <Cache-Control/>
 <BlobType>BlockBlob</BlobType>
 <LeaseStatus>unlocked</LeaseStatus>
 </Properties>
 </Blob>
 <Blob>
-<Name>archive/AthcoQualityControl_1.0.634.0.zip</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/archive/AthcoQualityControl_1.0.634.0.zip</Url>
+<Name>asFileSize.ts</Name>
+<Url>
+https://containerbrowserexample.blob.core.windows.net/example-1/asFileSize.ts
+</Url>
 <Properties>
-<Last-Modified>Thu, 14 Jul 2022 09:21:57 GMT</Last-Modified>
-<Etag>0x8DA657A4CA512B5</Etag>
-<Content-Length>26701901</Content-Length>
-<Content-Type>application/x-zip-compressed</Content-Type>
+<Last-Modified>Mon, 18 Jul 2022 11:52:58 GMT</Last-Modified>
+<Etag>0x8DA68B40EFBEFB9</Etag>
+<Content-Length>436</Content-Length>
+<Content-Type>text/plain</Content-Type>
 <Content-Encoding/>
 <Content-Language/>
-<Content-MD5/>
-<Cache-Control/>
-<BlobType>BlockBlob</BlobType>
-<LeaseStatus>unlocked</LeaseStatus>
-</Properties>
-</Blob>
-<Blob>
-<Name>archive/AthcoQualityControl_1.0.635.0.zip</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/archive/AthcoQualityControl_1.0.635.0.zip</Url>
-<Properties>
-<Last-Modified>Fri, 15 Jul 2022 11:16:24 GMT</Last-Modified>
-<Etag>0x8DA6653748415E1</Etag>
-<Content-Length>26703779</Content-Length>
-<Content-Type>application/x-zip-compressed</Content-Type>
-<Content-Encoding/>
-<Content-Language/>
-<Content-MD5/>
+<Content-MD5>g2xczx/Oc140cMB4QHh+Qg==</Content-MD5>
 <Cache-Control/>
 <BlobType>BlockBlob</BlobType>
 <LeaseStatus>unlocked</LeaseStatus>
@@ -229,15 +221,17 @@ const dummyXml = `
 </Blob>
 <Blob>
 <Name>browse.html</Name>
-<Url>https://kgnstorage.blob.core.windows.net/athco/browse.html</Url>
+<Url>
+https://containerbrowserexample.blob.core.windows.net/example-1/browse.html
+</Url>
 <Properties>
-<Last-Modified>Mon, 18 Jul 2022 09:09:11 GMT</Last-Modified>
-<Etag>0x8DA689D2D9E250E</Etag>
-<Content-Length>205575</Content-Length>
+<Last-Modified>Mon, 18 Jul 2022 13:51:59 GMT</Last-Modified>
+<Etag>0x8DA68C4AF5062E3</Etag>
+<Content-Length>212480</Content-Length>
 <Content-Type>text/html</Content-Type>
 <Content-Encoding/>
 <Content-Language/>
-<Content-MD5>ljYJg9pKGlN30+UVmTjbcg==</Content-MD5>
+<Content-MD5>+z0jsRkS2Qy8ryTOKcfJBw==</Content-MD5>
 <Cache-Control/>
 <BlobType>BlockBlob</BlobType>
 <LeaseStatus>unlocked</LeaseStatus>
